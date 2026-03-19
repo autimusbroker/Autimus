@@ -17,13 +17,19 @@
 <meta content="Cotizá tu seguro de auto de forma simple. Ingresá DNI, código postal y patente para recibir asesoramiento personalizado." name="description"/>
 <meta content="index,follow" name="robots"/>
 <meta content="#ffffff" name="theme-color"/>
-<!-- Google tag (reemplazar AW-XXXXXXXXX por tu ID real de Google Ads) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXX"></script>
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'AW-XXXXXXXXX');
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) !== 'undefined') {
+      window.open(url, '_blank');
+    }
+  };
+  gtag('event', 'conversion', {
+    'send_to': 'AW-11350503688/50gGCLXj1IocEIjiq6Qq',
+    'event_callback': callback
+  });
+  return false;
+}
 </script>
 <style>
 
@@ -389,19 +395,6 @@ N° de matrícula SSN 102339
 
 const phone = "5491179054956";
 
-function trackLeadConversion(label){
-  if (typeof gtag === "function") {
-    gtag("event", "conversion", {
-      "send_to": "AW-XXXXXXXXX/REEMPLAZAR_LABEL",
-      "event_label": label || "click_whatsapp"
-    });
-    gtag("event", label || "click_whatsapp", {
-      "event_category": "lead",
-      "event_label": label || "click_whatsapp"
-    });
-  }
-}
-
 function onlyDigits(value){
   return value.replace(/\D/g, "");
 }
@@ -417,12 +410,19 @@ function goWhatsApp(event){
   const cp = onlyDigits(document.getElementById("cpInput").value.trim());
   const patente = normalizePlate(document.getElementById("patenteInput").value.trim());
 
-  const text = `Hola Autimus, quiero cotizar mi seguro de auto.\n\nDNI: ${dni || "No informado"}\nCódigo Postal: ${cp || "No informado"}\nPatente: ${patente || "No informada"}`;
-  const url=`https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-  trackLeadConversion("click_whatsapp");
-  setTimeout(() => {
-    window.open(url,"_blank");
-  }, 120);
+  const text = `Hola Autimus, quiero cotizar mi seguro de auto.
+
+DNI: ${dni || "No informado"}
+Código Postal: ${cp || "No informado"}
+Patente: ${patente || "No informada"}`;
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+
+  if (typeof gtag === "function") {
+    return gtag_report_conversion(url);
+  }
+
+  window.open(url, "_blank");
+  return false;
 }
 
 window.addEventListener("load", () => {
