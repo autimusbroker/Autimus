@@ -865,13 +865,13 @@ function normalizePlate(value){
 function goWhatsApp(event){
   event.preventDefault();
 
-  const dni = onlyDigits(document.getElementById("dniInput").value.trim());
+  const edad = onlyDigits(document.getElementById("edadInput").value.trim());
   const cp = onlyDigits(document.getElementById("cpInput").value.trim());
   const patente = normalizePlate(document.getElementById("patenteInput").value.trim());
 
   const text = `Hola Autimus, quiero cotizar mi seguro de auto.
 
-DNI: ${dni || "No informado"}
+Edad: ${edad || "No informada"}
 Código Postal: ${cp || "No informado"}
 Patente: ${patente || "No informada"}`;
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
@@ -885,13 +885,13 @@ Patente: ${patente || "No informada"}`;
 }
 
 window.addEventListener("load", () => {
-  const dniInput = document.getElementById("dniInput");
+  const edadInput = document.getElementById("edadInput");
   const cpInput = document.getElementById("cpInput");
   const patenteInput = document.getElementById("patenteInput");
-  if (!dniInput || !cpInput || !patenteInput) return;
+  if (!edadInput || !cpInput || !patenteInput) return;
 
-  dniInput.addEventListener("input", () => {
-    dniInput.value = onlyDigits(dniInput.value);
+  edadInput.addEventListener("input", () => {
+    edadInput.value = onlyDigits(edadInput.value);
   });
 
   cpInput.addEventListener("input", () => {
@@ -903,11 +903,11 @@ window.addEventListener("load", () => {
   });
 
   setTimeout(() => {
-    dniInput.focus({ preventScroll: true });
+    edadInput.focus({ preventScroll: true });
   }, 250);
 
   let interactionTracked = false;
-  [dniInput, cpInput, patenteInput].forEach((input) => {
+  [edadInput, cpInput, patenteInput].forEach((input) => {
     input.addEventListener("focus", () => {
       if (interactionTracked) return;
       interactionTracked = true;
