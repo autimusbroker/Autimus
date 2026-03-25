@@ -14,7 +14,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Autimus | Óptimo para tu auto, óptimo para vos!</title>
-<meta content="Cotizá tu seguro de auto de forma simple. Ingresá tu Edad, código postal y patente para recibir asesoramiento personalizado." name="description"/>
+<meta content="Cotizá tu seguro de auto de forma simple. Ingresá tu edad, código postal, marca y modelo, y año para recibir asesoramiento personalizado." name="description"/>
 <meta content="index,follow" name="robots"/>
 <meta content="#ffffff" name="theme-color"/>
 <script>
@@ -123,9 +123,9 @@ body{
 }
 
 .field-group{
-  flex:1 1 180px;
-  min-width:180px;
-  text-align:left;
+  flex:1 1 160px;
+  min-width:160px;
+  text-align:center;
 }
 
 .field-group label{
@@ -133,7 +133,8 @@ body{
   font-size:13px;
   font-weight:700;
   color:#374151;
-  margin:0 0 8px 14px;
+  margin:0 0 8px;
+  text-align:center;
 }
 
 .search-box input{
@@ -244,12 +245,17 @@ body{
 
 
 .company-carousel{
-  width:100vw;
-  max-width:100vw;
-  margin:10px 0 18px;
-  padding:0 56px;
+  width:min(1120px, calc(100vw - 32px));
+  max-width:1120px;
+  margin:10px auto 18px;
+  padding:0 22px;
   overflow:hidden;
   box-sizing:border-box;
+  background:#ffffff;
+  border:1px solid #dfe7e2;
+  border-radius:999px;
+
+  overflow:hidden;
 }
 
 .company-track{
@@ -300,6 +306,11 @@ body{
 
 
 @media (max-width:768px){
+  .company-carousel{
+    width:calc(100vw - 20px);
+    padding:0 12px;
+    border-radius:999px;
+  }
   .company-logo{
     min-width:136px;
     height:60px;
@@ -333,6 +344,32 @@ body{
     min-width:140px;
     height:60px;
   }
+}
+
+
+.company-carousel{
+  position:relative !important;
+  overflow:hidden !important;
+  border-radius:999px !important;
+}
+.company-carousel::before,
+.company-carousel::after{
+  content:"";
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:22px;
+  background:#ffffff;
+  z-index:5;
+  pointer-events:none;
+}
+.company-carousel::before{
+  left:0;
+  border-radius:999px 0 0 999px;
+}
+.company-carousel::after{
+  right:0;
+  border-radius:0 999px 999px 0;
 }
 
 @keyframes scrollCompanies{
@@ -776,7 +813,7 @@ body{
 
 <p class="slogan">Cotiza tu seguro, simple. Óptimo!</p>
 <p class="sub">
-<span class="sub">Enviá tus datos por WhatsApp y recibí tu cotización en minutos</span>
+<span class="sub">Enviá los datos por WhatsApp y recibí tu cotización </span>
 </p>
 <form class="search-box" onsubmit="goWhatsApp(event)">
 <div class="field-group">
@@ -788,14 +825,17 @@ body{
 <input id="cpInput" inputmode="numeric" maxlength="8" placeholder="Ej: 1636" type="text"/>
 </div>
 <div class="field-group">
-<label for="patenteInput">Patente</label>
-<input id="patenteInput" autocapitalize="characters" maxlength="10" placeholder="Ej: AB123CD" type="text"/>
+<label for="vehiculoInput">Marca y modelo</label>
+<input id="vehiculoInput" maxlength="40" placeholder="Ej: Toyota Corolla SEG" type="text"/>
 </div>
-<button type="submit">Enviar x WS</button>
+<div class="field-group">
+<label for="anioInput">Año</label>
+<input id="anioInput" inputmode="numeric" maxlength="4" placeholder="Ej: 2020" type="text"/>
+</div>
+<button type="submit">Cotizar x WhatsApp</button>
 </form>
-<p class="ejemplo">Ej: 35 - 1636 - AA123BB</p>
 <p class="micro">
-<span class="sub">Asegurá en compañías líderes con asesoramiento personalizado</span>
+<span class="sub"><div style="text-align:center; font-size:22px; font-weight:600; margin-top:10px;">Asegurá en compañías líderes</div> </span>
 </p>
 
 <div class="company-carousel" aria-label="Compañías que cotizamos">
@@ -852,7 +892,7 @@ N° de matrícula SSN 102339
 </footer>
 <script>
 
-const phone = "5491127832498";
+const phone = "5491179054956";
 
 function onlyDigits(value){
   return value.replace(/\D/g, "");
@@ -867,13 +907,15 @@ function goWhatsApp(event){
 
   const edad = onlyDigits(document.getElementById("edadInput").value.trim());
   const cp = onlyDigits(document.getElementById("cpInput").value.trim());
-  const patente = normalizePlate(document.getElementById("patenteInput").value.trim());
+  const vehiculo = document.getElementById("vehiculoInput").value.trim();
+  const anio = onlyDigits(document.getElementById("anioInput").value.trim());
 
   const text = `Hola Autimus, quiero cotizar mi seguro de auto.
 
 Edad: ${edad || "No informada"}
 Código Postal: ${cp || "No informado"}
-Patente: ${patente || "No informada"}`;
+Marca y modelo: ${vehiculo || "No informado"}
+Año: ${anio || "No informado"}`;
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 
   if (typeof gtag === "function") {
@@ -887,8 +929,9 @@ Patente: ${patente || "No informada"}`;
 window.addEventListener("load", () => {
   const edadInput = document.getElementById("edadInput");
   const cpInput = document.getElementById("cpInput");
-  const patenteInput = document.getElementById("patenteInput");
-  if (!edadInput || !cpInput || !patenteInput) return;
+  const vehiculoInput = document.getElementById("vehiculoInput");
+  const anioInput = document.getElementById("anioInput");
+  if (!edadInput || !cpInput || !vehiculoInput || !anioInput) return;
 
   edadInput.addEventListener("input", () => {
     edadInput.value = onlyDigits(edadInput.value);
@@ -898,8 +941,8 @@ window.addEventListener("load", () => {
     cpInput.value = onlyDigits(cpInput.value);
   });
 
-  patenteInput.addEventListener("input", () => {
-    patenteInput.value = normalizePlate(patenteInput.value);
+  anioInput.addEventListener("input", () => {
+    anioInput.value = onlyDigits(anioInput.value).slice(0, 4);
   });
 
   setTimeout(() => {
@@ -907,7 +950,7 @@ window.addEventListener("load", () => {
   }, 250);
 
   let interactionTracked = false;
-  [edadInput, cpInput, patenteInput].forEach((input) => {
+  [edadInput, cpInput, vehiculoInput, anioInput].forEach((input) => {
     input.addEventListener("focus", () => {
       if (interactionTracked) return;
       interactionTracked = true;
