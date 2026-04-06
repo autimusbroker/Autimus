@@ -157,7 +157,8 @@ a{color:inherit}
   font-weight:700;
   color:#344256;
 }
-.search-box input{
+.search-box input,
+.search-box select{
   width:100%;
   height:52px;
   padding:0 18px;
@@ -168,9 +169,29 @@ a{color:inherit}
   outline:none;
   background:#fff;
 }
-.search-box input:focus{
+.search-box input:focus,
+.search-box select:focus{
   border-color:#8ab0df;
   box-shadow:0 0 0 4px rgba(11,83,160,.10);
+}
+.search-box select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  cursor:pointer;
+}
+.help-text{
+  width:100%;
+  margin:4px 0 0;
+  text-align:center;
+  font-size:13px;
+  line-height:1.45;
+  color:#e7eef8;
+}
+.help-text a{
+  color:#ffffff;
+  font-weight:700;
+  text-decoration:underline;
 }
 .search-box button,
 .final-cta .whatsapp-cta{
@@ -445,7 +466,7 @@ a{color:inherit}
   }
   .field-group{min-width:0}
   .field-group label{font-size:12px;margin-left:4px}
-  .search-box input{height:48px;font-size:15px}
+  .search-box input,.search-box select{height:48px;font-size:15px}
   .search-box button{width:100%;min-width:0;height:50px;font-size:16px}
   .info-boxed{padding:18px 14px;border-radius:18px}
   .info-boxed h2{font-size:25px}
@@ -542,22 +563,25 @@ a{color:inherit}
 <p class="sub">Enviá los datos por WhatsApp y recibí tu cotización.</p>
 <form class="search-box" onsubmit="goWhatsApp(event)">
 <div class="field-group">
-<label for="edadInput">Edad</label>
-<input id="edadInput" inputmode="numeric" maxlength="2" placeholder="Ej: 35" type="text"/>
+<label for="anioSelect">Año</label>
+<select id="anioSelect">
+<option value="">Seleccioná el año</option>
+</select>
 </div>
 <div class="field-group">
-<label for="cpInput">Código Postal</label>
-<input id="cpInput" inputmode="numeric" maxlength="8" placeholder="Ej: 1636" type="text"/>
+<label for="marcaSelect">Marca</label>
+<select id="marcaSelect" disabled>
+<option value="">Seleccioná la marca</option>
+</select>
 </div>
 <div class="field-group">
-<label for="vehiculoInput">Marca y modelo</label>
-<input id="vehiculoInput" maxlength="40" placeholder="Ej: Toyota Corolla SEG" type="text"/>
-</div>
-<div class="field-group">
-<label for="anioInput">Año</label>
-<input id="anioInput" inputmode="numeric" maxlength="4" placeholder="Ej: 2020" type="text"/>
+<label for="modeloSelect">Modelo</label>
+<select id="modeloSelect" disabled>
+<option value="">Seleccioná el modelo exacto</option>
+</select>
 </div>
 <button type="submit">Cotizar por WhatsApp</button>
+<p class="help-text">¿No encontrás tu auto? <a href="https://wa.me/5491127832498?text=Hola%20Autimus%2C%20no%20encontr%C3%A9%20mi%20auto%20en%20el%20listado%20y%20quiero%20cotizar." target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp</a></p>
 </form>
 <div class="info-boxed">
   <h2>Asesoramiento profesional para elegir el mejor seguro para tu auto.</h2>
@@ -687,6 +711,7 @@ N° de matrícula SSN 102339
 <div class="brand-note">Autimus es marca registrada de Cristóbal Feliciano - Broker de seguros.</div>
 </div>
 </footer>
+<script src="autimus_vehiculos_v2.js"></script>
 <script>
 
 const phone = "5491127832498";
@@ -699,17 +724,15 @@ function onlyDigits(value){
 function goWhatsApp(event){
   event.preventDefault();
 
-  const edad = onlyDigits(document.getElementById("edadInput").value.trim());
-  const cp = onlyDigits(document.getElementById("cpInput").value.trim());
-  const vehiculo = document.getElementById("vehiculoInput").value.trim();
-  const anio = onlyDigits(document.getElementById("anioInput").value.trim());
+  const anio = document.getElementById("anioSelect").value.trim();
+  const marca = document.getElementById("marcaSelect").value.trim();
+  const modelo = document.getElementById("modeloSelect").value.trim();
 
   const text = `Hola Autimus, quiero cotizar mi seguro de auto.
 
-Edad: ${edad || "No informada"}
-Código Postal: ${cp || "No informado"}
-Marca y modelo: ${vehiculo || "No informado"}
-Año: ${anio || "No informado"}`;
+Año: ${anio || "No informado"}
+Marca: ${marca || "No informada"}
+Modelo: ${modelo || "No informado"}`;
   const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
 
   if (typeof gtag === "function") {
@@ -720,31 +743,69 @@ Año: ${anio || "No informado"}`;
   return false;
 }
 
-window.addEventListener("load", () => {
-  const edadInput = document.getElementById("edadInput");
-  const cpInput = document.getElementById("cpInput");
-  const vehiculoInput = document.getElementById("vehiculoInput");
-  const anioInput = document.getElementById("anioInput");
-  if (!edadInput || !cpInput || !vehiculoInput || !anioInput) return;
+window.addEventListener("DOMContentLoaded", () => {
+  const anioSelect = document.getElementById("anioSelect");
+  const marcaSelect = document.getElementById("marcaSelect");
+  const modeloSelect = document.getElementById("modeloSelect");
+  if (!anioSelect || !marcaSelect || !modeloSelect) return;
 
-  edadInput.addEventListener("input", () => {
-    edadInput.value = onlyDigits(edadInput.value);
-  });
+  const resetMarca = () => {
+    marcaSelect.innerHTML = '<option value="">Seleccioná la marca</option>';
+    marcaSelect.disabled = true;
+  };
 
-  cpInput.addEventListener("input", () => {
-    cpInput.value = onlyDigits(cpInput.value);
-  });
+  const resetModelo = () => {
+    modeloSelect.innerHTML = '<option value="">Seleccioná el modelo exacto</option>';
+    modeloSelect.disabled = true;
+  };
 
-  anioInput.addEventListener("input", () => {
-    anioInput.value = onlyDigits(anioInput.value).slice(0, 4);
-  });
+  const fillAnios = () => {
+    anioSelect.innerHTML = '<option value="">Seleccioná el año</option>';
+    if (typeof AUTIMUS_VEHICLES !== "object" || !AUTIMUS_VEHICLES) return;
+    Object.keys(AUTIMUS_VEHICLES)
+      .sort((a, b) => Number(b) - Number(a))
+      .forEach((anio) => anioSelect.add(new Option(anio, anio)));
+  };
+
+  const fillMarcas = () => {
+    resetMarca();
+    resetModelo();
+    const anio = anioSelect.value;
+    if (!anio || typeof AUTIMUS_VEHICLES !== "object" || !AUTIMUS_VEHICLES[anio]) return;
+
+    Object.keys(AUTIMUS_VEHICLES[anio])
+      .sort((a, b) => a.localeCompare(b, "es"))
+      .forEach((marca) => marcaSelect.add(new Option(marca, marca)));
+
+    marcaSelect.disabled = false;
+  };
+
+  const fillModelos = () => {
+    resetModelo();
+    const anio = anioSelect.value;
+    const marca = marcaSelect.value;
+    if (!anio || !marca) return;
+    if (typeof AUTIMUS_VEHICLES !== "object" || !AUTIMUS_VEHICLES[anio] || !AUTIMUS_VEHICLES[anio][marca]) return;
+
+    AUTIMUS_VEHICLES[anio][marca]
+      .forEach((modelo) => modeloSelect.add(new Option(modelo, modelo)));
+
+    modeloSelect.disabled = false;
+  };
+
+  fillAnios();
+  resetMarca();
+  resetModelo();
+
+  anioSelect.addEventListener("change", fillMarcas);
+  marcaSelect.addEventListener("change", fillModelos);
 
   setTimeout(() => {
-    edadInput.focus({ preventScroll: true });
+    try { anioSelect.focus({ preventScroll: true }); } catch(e) {}
   }, 250);
 
   let interactionTracked = false;
-  [edadInput, cpInput, vehiculoInput, anioInput].forEach((input) => {
+  [anioSelect, marcaSelect, modeloSelect].forEach((input) => {
     input.addEventListener("focus", () => {
       if (interactionTracked) return;
       interactionTracked = true;
