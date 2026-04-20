@@ -13,8 +13,8 @@
 
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Autimus | Cotizá el seguro de tu vehículo con asesoramiento personalizado</title>
-<meta content="Cotizá tu seguro automotor con asesoramiento personalizado. Compará coberturas, precios y compañías líderes en un proceso simple por WhatsApp." name="description"/>
+<title>Autimus | Cotizá tu seguro de auto o moto online en Argentina | Asesoramiento personalizado</title>
+<meta content="Cotizá tu seguro de auto o moto online en Argentina. Comparamos coberturas y precios entre compañías líderes con asesoramiento personalizado por WhatsApp. Seguro automotor fácil y rápido." name="description"/>
 <meta content="index,follow" name="robots"/>
 <meta content="#ffffff" name="theme-color"/>
 <script>
@@ -474,6 +474,154 @@ a{color:inherit}
   .auto-info-grid{grid-template-columns:1fr}
   .footer-divider{display:none}
 }
+/* === BANNER AUTIMUS === */
+  .autimus-master-container {
+    position: fixed;
+    bottom: 25px;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 100000;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateX(100%);
+    font-family: Arial, sans-serif;
+  }
+  .autimus-master-container.visible   { transform: translateX(-15px); }
+  .autimus-master-container.minimized { transform: translateX(calc(100% - 55px)); }
+  .autimus-tab-toggle {
+    flex-shrink: 0;
+    width: 55px;
+    height: 150px;
+    background-color: #218838;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 18px 0 0 18px;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .autimus-tab-toggle .icon-tab {
+    font-size: 24px; font-weight: bold; margin-bottom: 5px; line-height: 1;
+  }
+  .autimus-tab-toggle .label-tab {
+    font-size: 11px; font-weight: 900; text-transform: uppercase;
+    writing-mode: vertical-rl; text-orientation: mixed;
+  }
+  .autimus-tab-toggle::after {
+    content: ""; position: absolute; top: -150%; left: -150%;
+    width: 300%; height: 300%;
+    background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.1) 48%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1) 52%, transparent 55%);
+    animation: shine-tab 3.5s infinite;
+  }
+  @keyframes shine-tab {
+    0%   { transform: translate(-50%,-50%) rotate(45deg); }
+    20%  { transform: translate(50%,50%) rotate(45deg); }
+    100% { transform: translate(50%,50%) rotate(45deg); }
+  }
+  .autimus-banner-content {
+    width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-left: 15px;
+  }
+  .autimus-header-banner {
+    background-color: #28a745;
+    color: white;
+    padding: 18px;
+    border-radius: 22px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  .autimus-body-row { display: flex; gap: 12px; }
+  .autimus-btn-cuadro {
+    flex: 1;
+    background-color: #28a745;
+    color: white;
+    border-radius: 22px;
+    padding: 18px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    min-height: 140px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .autimus-btn-cuadro .sub-text {
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-top: 5px;
+  }
+  .autimus-check-white {
+    width: 28px; height: 28px;
+    background: white; color: #28a745;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+    font-weight: bold; font-size: 16px;
+  }
+  @media (max-width: 600px) {
+    .autimus-master-container {
+      bottom: 15px;
+      max-width: calc(100vw - 8px);
+    }
+    .autimus-master-container.visible   { transform: translateX(-4px); }
+    .autimus-master-container.minimized { transform: translateX(calc(100% - 44px)); }
+    .autimus-tab-toggle {
+      width: 44px;
+      min-height: 180px;
+      height: auto;
+      border-radius: 14px 0 0 14px;
+    }
+    .autimus-tab-toggle .icon-tab  { font-size: 18px; }
+    .autimus-tab-toggle .label-tab { font-size: 9px; }
+    .autimus-banner-content {
+      width: calc(100vw - 56px);
+      max-width: 280px;
+      padding-left: 8px;
+      gap: 8px;
+    }
+    .autimus-header-banner {
+      font-size: 11px;
+      padding: 10px 8px;
+      border-radius: 12px;
+    }
+    .autimus-body-row {
+      flex-direction: column;
+      gap: 7px;
+    }
+    .autimus-btn-cuadro {
+      min-height: 70px;
+      padding: 12px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+    .autimus-btn-cuadro .sub-text {
+      font-size: 11px;
+      margin-top: 3px;
+    }
+    .autimus-check-white {
+      width: 20px; height: 20px;
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+  }
+  /* === FIN BANNER AUTIMUS === */
+
 @media (max-width: 768px){
   .wrap{width:100%;padding:12px 10px 18px}
   .top-logo{display:block;width:300px;max-width:78vw;height:auto;margin:0 auto 14px}
@@ -518,14 +666,18 @@ a{color:inherit}
 <meta name="keywords" content="seguro de auto, seguro de moto, seguro automotor, cotizar seguro auto, seguro automotor online, comparar seguros de auto, seguro coche argentina, autimus"/>
 <meta name="author" content="Autimus"/>
 
-<meta property="og:title" content="Autimus | Cotizá tu seguro de auto o moto con asesoramiento personalizado"/>
-<meta property="og:description" content="Compará coberturas y precios de seguro automotor con compañías líderes y seguimiento por WhatsApp."/>
+<meta property="og:title" content="Autimus | Cotizá tu seguro de auto o moto online en Argentina"/>
+<meta property="og:description" content="Comparamos coberturas y precios entre compañías líderes con asesoramiento personalizado. Seguro automotor fácil, rápido y sin vueltas."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://www.autimus.com.ar/"/>
+<meta property="og:image" content="https://www.autimus.com.ar/logo-autimus.png"/>
+<meta property="og:image:alt" content="Autimus - Seguro de auto y moto online en Argentina"/>
+<meta property="og:locale" content="es_AR"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Autimus | Cotizá tu seguro automotor"/>
-<meta name="twitter:description" content="Compará coberturas y precios de seguro automotor con asesoramiento personalizado."/>
+<meta name="twitter:title" content="Autimus | Cotizá tu seguro de auto o moto online"/>
+<meta name="twitter:description" content="Comparamos coberturas y precios entre compañías líderes con asesoramiento personalizado. Seguro automotor online en Argentina."/>
+<meta name="twitter:image" content="https://www.autimus.com.ar/logo-autimus.png"/>
 
 <script type="application/ld+json">
 {
@@ -554,26 +706,50 @@ a{color:inherit}
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "¿Qué datos necesitás para cotizar un seguro automotor?",
+      "name": "¿Cómo cotizo mi seguro de auto online en Argentina?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Para iniciar una cotización se solicitan datos básicos como año, marca y modelo del vehículo. Si hace falta completar información adicional, la consulta continúa por WhatsApp."
+        "text": "Podés iniciar la consulta escribiéndonos por WhatsApp. Desde ahí te pedimos los datos del vehículo y te ayudamos a comparar coberturas y precios entre compañías líderes de forma simple y rápida."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Autimus compara opciones entre distintas compañías?",
+      "name": "¿Autimus compara seguros de auto entre distintas compañías?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Autimus orienta la evaluación de alternativas entre compañías líderes para ayudarte a comparar coberturas, alcance y precio según el perfil del vehículo."
+        "text": "Sí. Evaluamos alternativas entre compañías líderes del mercado argentino para ayudarte a comparar coberturas, alcance y precio según el perfil de tu vehículo y zona."
       }
     },
     {
       "@type": "Question",
-      "name": "¿La cotización se continúa por WhatsApp?",
+      "name": "¿Puedo cotizar seguro de moto también?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí. Una vez completados los datos básicos, la consulta continúa por WhatsApp para brindar asesoramiento personalizado y ordenar la cotización."
+        "text": "Sí. Además de seguros de auto, trabajamos con seguros de moto. Podés escribirnos por WhatsApp para recibir asesoramiento personalizado según el tipo de vehículo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué coberturas de seguro automotor puedo contratar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Trabajamos con distintas coberturas: responsabilidad civil, terceros completos, todo riesgo con franquicia y más. Las opciones incluyen robo, hurto, incendio, granizo, cristales y asistencia según la compañía y el plan elegido."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo continúa el proceso después de cotizar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Una vez iniciada la consulta por WhatsApp, te asesoramos de forma personalizada para comparar opciones, resolver dudas y avanzar con la emisión del seguro de manera simple."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuándo comienza la cobertura?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dependiendo del plan y la compañía, las coberturas pueden comenzar en el momento o luego de la verificación de las fotos del vehículo."
       }
     }
   ]
@@ -603,28 +779,7 @@ a{color:inherit}
     <div class="company-logo logo-holando"><img src="data:image/png;base64,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" alt="Holando"></div>
   </div>
 </div>
-<form class="search-box" onsubmit="goWhatsApp(event)">
-<div class="field-group">
-<label for="anioSelect">Año</label>
-<select id="anioSelect">
-<option value="">Seleccioná el año</option>
-</select>
-</div>
-<div class="field-group">
-<label for="marcaSelect">Marca</label>
-<select id="marcaSelect" disabled>
-<option value="">Seleccioná la marca</option>
-</select>
-</div>
-<div class="field-group">
-<label for="modeloSelect">Modelo</label>
-<select id="modeloSelect" disabled>
-<option value="">Seleccioná el modelo exacto</option>
-</select>
-</div>
-<button type="submit">Quiero cotizar ahora</button>
-<p class="help-text">¿Querés asegurar una moto? <a href="https://wa.me/5491127832498?text=Hola%20Autimus%2C%20quiero%20asegurar%20mi%20moto." target="_blank" rel="noopener noreferrer">Escribinos por WhatsApp</a></p>
-</form>
+
 <div class="info-boxed">
   <h2>Asesoramiento profesional para elegir la cobertura óptima.</h2>
   <p>En Autimus analizamos alternativas entre compañías líderes para ayudarte a comparar coberturas y precios de manera transparente.</p>
@@ -644,7 +799,7 @@ a{color:inherit}
 </div>
 </div>
 
-<section aria-label="Información clave sobre seguros para aumotores" style="margin-top:28px;">
+<section aria-label="Información clave sobre seguros para automotores" style="margin-top:28px;">
   <h2 class="section-title"></h2>
   <p class="section-intro"></p>
   <div class="auto-info-grid">
@@ -685,23 +840,35 @@ a{color:inherit}
 <section class="faq-block" aria-label="Preguntas frecuentes">
   <h2>Preguntas frecuentes</h2>
   <div class="faq-item">
-    <h3>¿Qué datos necesitás para cotizar un seguro automotor?</h3>
-    <p>Para iniciar la cotización se solicitan datos básicos como edad, código postal, marca, modelo y año del vehículo. Con esa base se puede orientar mejor la búsqueda de alternativas.</p>
+    <h3>¿Cómo cotizo mi seguro de auto online en Argentina?</h3>
+    <p>Podés iniciar la consulta escribiéndonos por WhatsApp. Desde ahí te pedimos los datos del vehículo y te ayudamos a comparar coberturas y precios entre compañías líderes de forma simple y rápida.</p>
   </div>
   <div class="faq-item">
-    <h3>¿Autimus compara opciones entre distintas compañías?</h3>
-    <p>Sí. La propuesta es ayudarte a revisar opciones entre compañías líderes para comparar cobertura, alcance y precio con asesoramiento personalizado.</p>
+    <h3>¿Autimus compara seguros de auto entre distintas compañías?</h3>
+    <p>Sí. Evaluamos alternativas entre compañías líderes del mercado argentino para ayudarte a comparar coberturas, alcance y precio según el perfil de tu vehículo y zona.</p>
   </div>
   <div class="faq-item">
-    <h3>¿La consulta continúa por WhatsApp?</h3>
-    <p>Sí. El paso siguiente se hace por WhatsApp para ordenar la información, responder consultas y acompañarte durante la cotización de forma práctica.</p>
+    <h3>¿Puedo cotizar seguro de moto también?</h3>
+    <p>Sí. Además de seguros de auto, trabajamos con seguros de moto. Podés escribirnos por WhatsApp para recibir asesoramiento personalizado según el tipo de vehículo.</p>
+  </div>
+  <div class="faq-item">
+    <h3>¿Qué coberturas de seguro automotor puedo contratar?</h3>
+    <p>Trabajamos con distintas coberturas: responsabilidad civil, terceros completos, todo riesgo con franquicia y más. Las opciones incluyen robo, hurto, incendio, granizo, cristales y asistencia según la compañía y el plan elegido.</p>
+  </div>
+  <div class="faq-item">
+    <h3>¿Cómo continúa el proceso después de cotizar?</h3>
+    <p>Una vez iniciada la consulta por WhatsApp, te asesoramos de forma personalizada para comparar opciones, resolver dudas y avanzar con la emisión del seguro de manera simple.</p>
+  </div>
+  <div class="faq-item">
+    <h3>¿Cuándo comienza la cobertura?</h3>
+    <p>Dependiendo del plan y la compañía, las coberturas pueden comenzar en el momento o luego de la verificación de las fotos del vehículo.</p>
   </div>
 </section>
 
 <section class="final-cta" aria-label="Llamado a la acción final">
   <h2>Cotizá tu seguro ahora</h2>
-  <p>Dejanos los datos básicos de tu vehículo y tu zona. Te ayudamos a comparar opciones, revisar coberturas y avanzar con una cotización clara por WhatsApp.</p>
-  <a class="whatsapp-cta" href="#" onclick="return goWhatsApp(event)">Recibir cotización por WhatsApp</a>
+  <p>Escribinos por WhatsApp y te ayudamos a comparar opciones, revisar coberturas y encontrar la más adecuada para tu vehículo.</p>
+  <a class="whatsapp-cta" href="https://wa.me/5491127832498?text=Hola%20Autimus%2C%20me%20contacto%20desde%20la%20web" target="_blank" rel="noopener noreferrer">Contactanos por WhatsApp</a>
 </section>
 
 </main>
@@ -737,128 +904,78 @@ N° de matrícula SSN 102339
 <div class="brand-note">Autimus es marca registrada de Cristóbal Feliciano - Broker de seguros.</div>
 </div>
 </footer>
-<script src="autimus_vehiculos_v2.js"></script>
+
 <script>
 
-const phone = "5491127832498";
-
-function onlyDigits(value){
-  return value.replace(/\D/g, "");
-}
-
-
-function goWhatsApp(event){
-  event.preventDefault();
-
-  const anio = document.getElementById("anioSelect").value.trim();
-  const marca = document.getElementById("marcaSelect").value.trim();
-  const modelo = document.getElementById("modeloSelect").value.trim();
-
-  const text = `Hola Autimus, quiero cotizar mi seguro.
-
-Año: ${anio || "No informado"}
-Marca: ${marca || "No informada"}
-Modelo: ${modelo || "No informado"}`;
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-
-  if (typeof gtag === "function") {
-    return gtag_report_conversion(url);
+</script>
+<!-- === BANNER AUTIMUS === -->
+<div id="autimusBanner" class="autimus-master-container">
+  <div class="autimus-tab-toggle" onclick="toggleAutimusBanner()" id="autimusTab">
+    <span class="icon-tab" id="tabIcon">←</span>
+    <span class="label-tab" id="tabLabel">Cotizar</span>
+  </div>
+  <div class="autimus-banner-content">
+    <div class="autimus-header-banner">
+      ¿Cómo querés cotizar tu seguro?
+    </div>
+    <div class="autimus-body-row">
+      <a href="https://wa.me/5491127832498?text=Hola%20Autimus,%20quiero%20asesoramiento"
+         target="_blank"
+         class="autimus-btn-cuadro">
+        <div class="autimus-check-white">✓</div>
+        <span>Cotizar por WhatsApp con asesoramiento</span>
+      </a>
+      <div onclick="window.open('https://www.sancristobal.com.ar/pas/cristobal-feliciano/cotizar','_blank')" class="autimus-btn-cuadro">
+        <div class="autimus-check-white">✓</div>
+        <span>Cotizar directo en San Cristóbal Seguros</span>
+        <span class="sub-text">100% online - precios en el momento</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function abrirBanner() {
+    const banner = document.getElementById('autimusBanner');
+    const icon   = document.getElementById('tabIcon');
+    const label  = document.getElementById('tabLabel');
+    banner.classList.remove('minimized');
+    banner.classList.add('visible');
+    icon.innerText  = "✕";
+    label.innerText = "Cerrar";
   }
 
-  window.open(url, "_blank", "noopener,noreferrer");
-  return false;
-}
+  window.addEventListener('load', function() {
+    // Momento 0: pestaña visible (minimizado)
+    const banner = document.getElementById('autimusBanner');
+    banner.classList.add('minimized');
 
-window.addEventListener("DOMContentLoaded", () => {
-  const anioSelect = document.getElementById("anioSelect");
-  const marcaSelect = document.getElementById("marcaSelect");
-  const modeloSelect = document.getElementById("modeloSelect");
-  if (!anioSelect || !marcaSelect || !modeloSelect) return;
+    // A los 10 segundos: se abre el banner completo
+    setTimeout(() => {
+      abrirBanner();
+    }, 10000);
 
-  const resetMarca = () => {
-    marcaSelect.innerHTML = '<option value="">Seleccioná la marca</option>';
-    marcaSelect.disabled = true;
-  };
-
-  const resetModelo = () => {
-    modeloSelect.innerHTML = '<option value="">Seleccioná el modelo exacto</option>';
-    modeloSelect.disabled = true;
-  };
-
-  const fillAnios = () => {
-    anioSelect.innerHTML = '<option value="">Seleccioná el año</option>';
-    if (typeof AUTIMUS_VEHICLES !== "object" || !AUTIMUS_VEHICLES) return;
-    Object.keys(AUTIMUS_VEHICLES)
-      .sort((a, b) => Number(b) - Number(a))
-      .forEach((anio) => anioSelect.add(new Option(anio, anio)));
-  };
-
-  const fillMarcas = () => {
-    resetMarca();
-    resetModelo();
-    const anio = anioSelect.value;
-    if (!anio || typeof AUTIMUS_VEHICLES !== "object" || !AUTIMUS_VEHICLES[anio]) return;
-
-    Object.keys(AUTIMUS_VEHICLES[anio])
-      .sort((a, b) => a.localeCompare(b, "es"))
-      .forEach((marca) => marcaSelect.add(new Option(marca, marca)));
-
-    marcaSelect.disabled = false;
-  };
-
-  const fillModelos = () => {
-    resetModelo();
-    const anio = anioSelect.value;
-    const marca = marcaSelect.value;
-    if (!anio || !marca) return;
-    if (typeof AUTIMUS_VEHICLES !== "object" || !AUTIMUS_VEHICLES[anio] || !AUTIMUS_VEHICLES[anio][marca]) return;
-
-    AUTIMUS_VEHICLES[anio][marca]
-      .forEach((modelo) => modeloSelect.add(new Option(modelo, modelo)));
-
-    modeloSelect.disabled = false;
-  };
-
-  fillAnios();
-  resetMarca();
-  resetModelo();
-
-  anioSelect.addEventListener("change", fillMarcas);
-  marcaSelect.addEventListener("change", fillModelos);
-
-  setTimeout(() => {
-    try { anioSelect.focus({ preventScroll: true }); } catch(e) {}
-  }, 250);
-
-  let interactionTracked = false;
-  [anioSelect, marcaSelect, modeloSelect].forEach((input) => {
-    input.addEventListener("focus", () => {
-      if (interactionTracked) return;
-      interactionTracked = true;
-      if (typeof gtag === "function") {
-        gtag("event", "focus_cotizador", {
-          "event_category": "engagement"
-        });
-      }
-    }, { once:true });
+    // A los 25 segundos: se vuelve a abrir automáticamente
+    setTimeout(() => {
+      abrirBanner();
+    }, 25000);
   });
-});
 
-let scrollTracked = false;
-window.addEventListener("scroll", () => {
-  if (scrollTracked) return;
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  if (docHeight > 0 && (scrollTop / docHeight) >= 0.4) {
-    scrollTracked = true;
-    if (typeof gtag === "function") {
-      gtag("event", "scroll_40", {
-        "event_category": "engagement"
-      });
+  function toggleAutimusBanner() {
+    const banner = document.getElementById('autimusBanner');
+    const icon   = document.getElementById('tabIcon');
+    const label  = document.getElementById('tabLabel');
+    if (banner.classList.contains('visible')) {
+      banner.classList.remove('visible');
+      banner.classList.add('minimized');
+      icon.innerText  = "←";
+      label.innerText = "Cotizar";
+    } else {
+      abrirBanner();
     }
   }
-});
+
 
 </script>
+<!-- === FIN BANNER AUTIMUS === -->
 </body>
 </html>
