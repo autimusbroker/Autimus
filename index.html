@@ -574,6 +574,23 @@ a{color:inherit}
     margin-bottom: 10px;
     font-weight: bold; font-size: 16px;
   }
+  /* Estilos base PC para elementos del botón 2 */
+  .btn-main-text {
+    display: block;
+    text-align: center;
+  }
+  .btn-sub-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .btn-sub-row .autimus-check-white {
+    margin-bottom: 0;
+    margin-top: 5px;
+  }
+  .btn-check-mobile { display: none; }
+  .btn-check { display: flex; }
   @media (max-width: 600px) {
     .autimus-master-container {
       bottom: 15px;
@@ -606,18 +623,49 @@ a{color:inherit}
     }
     .autimus-btn-cuadro {
       min-height: 90px;
-      padding: 12px 10px;
+      padding: 14px 12px;
       border-radius: 12px;
-      font-size: 15px;
+      font-size: 19px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      gap: 10px;
     }
     .autimus-btn-cuadro .sub-text {
-      font-size: 13px;
+      font-size: 14px;
       margin-top: 3px;
     }
     .autimus-check-white {
-      width: 20px; height: 20px;
-      font-size: 12px;
+      width: 26px; height: 26px;
+      font-size: 14px;
+      margin-bottom: 0;
+      flex-shrink: 0;
+      order: 2;
+    }
+    .btn-main-text {
+      display: block;
+      width: 100%;
+      font-size: 19px;
+      font-weight: 700;
       margin-bottom: 6px;
+      text-align: left;
+    }
+    .btn-sub-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      gap: 8px;
+      text-align: left;
+    }
+    .btn-check { display: none; }
+    .btn-check-mobile { display: flex; width: 26px; height: 26px; font-size: 14px; margin: 0; flex-shrink: 0; }
+    .autimus-btn-cuadro:has(.btn-main-text) {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
     }
   }
   /* === FIN BANNER AUTIMUS === */
@@ -926,9 +974,12 @@ N° de matrícula SSN 102339
         <span>Cotizar por WhatsApp con asesoramiento</span>
       </a>
       <div onclick="window.open('https://www.sancristobal.com.ar/pas/cristobal-feliciano/cotizar','_blank')" class="autimus-btn-cuadro">
-        <div class="autimus-check-white">✓</div>
-        <span>Cotizar directo en San Cristóbal Seguros</span>
-        <span class="sub-text">100% online - precios en el momento</span>
+        <div class="autimus-check-white btn-check">✓</div>
+        <span class="btn-main-text">Cotizar directo en San Cristóbal Seguros</span>
+        <div class="btn-sub-row">
+          <span class="sub-text">100% online - precios en el momento</span>
+          <div class="autimus-check-white btn-check-mobile">✓</div>
+        </div>
       </div>
     </div>
   </div>
