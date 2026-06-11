@@ -707,16 +707,35 @@ a{color:inherit}
         <input type="email" name="email" required placeholder="tu@mail.com" style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;">
       </div>
       <div>
-        <label style="display:block;font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:6px;font-family:Arial,Helvetica,sans-serif;">Marca / Modelo / Versión</label>
-        <input type="text" name="vehiculo" placeholder="Ej: Toyota Corolla XEi..." style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;">
+        <label for="sel-anio" style="display:block;font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:6px;font-family:Arial,Helvetica,sans-serif;">Año</label>
+        <select name="anio" id="sel-anio" style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;">
+          <option value="">Seleccioná el año...</option>
+        </select>
       </div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:12px;" class="form-row-3">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;" class="form-row-3">
       <div>
-        <label style="display:block;font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:6px;font-family:Arial,Helvetica,sans-serif;">Año</label>
-        <input type="number" name="año" placeholder="Ej: 2021" min="1980" max="2026" style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;">
+        <label for="sel-marca" style="display:block;font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:6px;font-family:Arial,Helvetica,sans-serif;">Marca</label>
+        <select name="marca" id="sel-marca" disabled style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;">
+          <option value="">Primero elegí el año</option>
+        </select>
       </div>
+      <div>
+        <label for="sel-modelo" style="display:block;font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:6px;font-family:Arial,Helvetica,sans-serif;">Modelo</label>
+        <select name="modelo" id="sel-modelo" disabled style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;">
+          <option value="">Primero elegí la marca</option>
+        </select>
+      </div>
+      <div>
+        <label for="sel-version" style="display:block;font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:6px;font-family:Arial,Helvetica,sans-serif;">Versión</label>
+        <select name="version" id="sel-version" disabled style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;">
+          <option value="">Primero elegí el modelo</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;" class="form-row-3b">
       <div>
         <label for="gnc" style="display:block;font-size:13px;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:6px;font-family:Arial,Helvetica,sans-serif;">¿Tiene GNC?</label>
         <select name="gnc" id="gnc" style="width:100%;height:44px;padding:0 14px;font-size:14px;color:#0f172a;border:1px solid rgba(255,255,255,.3);border-radius:12px;outline:none;font-family:Arial,Helvetica,sans-serif;box-sizing:border-box;background:#fff;appearance:none;-webkit-appearance:none;cursor:pointer;">
@@ -754,6 +773,95 @@ a{color:inherit}
       ✓ ¡Gracias! En breve nos contactamos con vos.
     </div>
   </form>
+  <script>
+  (function(){
+    var autosLoaded = false;
+
+    function loadAutos(callback) {
+      if (autosLoaded) { callback(); return; }
+      var s = document.createElement('script');
+      s.src = 'autos.js';
+      s.onload = function() { autosLoaded = true; callback(); };
+      document.head.appendChild(s);
+    }
+
+    function initSelects() {
+var selAnio   = document.getElementById('sel-anio');
+    var selMarca  = document.getElementById('sel-marca');
+    var selModelo = document.getElementById('sel-modelo');
+    var selVersion= document.getElementById('sel-version');
+
+    // Poblar años
+    var years = Object.keys(AUTOS).sort(function(a,b){
+      if(a==='0 Km') return -1;
+      if(b==='0 Km') return 1;
+      return parseInt(b)-parseInt(a);
+    });
+    years.forEach(function(y){
+      var o = document.createElement('option');
+      o.value = y; o.textContent = y==='0 Km'?'0 Km (nuevo)':y;
+      selAnio.appendChild(o);
+    });
+
+    function resetSelect(sel, placeholder){
+      sel.innerHTML = '<option value="">'+placeholder+'</option>';
+      sel.disabled = true;
+    }
+
+    selAnio.addEventListener('change', function(){
+      resetSelect(selMarca,'Seleccioná la marca...');
+      resetSelect(selModelo,'Primero elegí la marca');
+      resetSelect(selVersion,'Primero elegí el modelo');
+      var y = this.value;
+      if(!y) return;
+      var marcas = Object.keys(AUTOS[y]).sort();
+      marcas.forEach(function(m){
+        var o=document.createElement('option');
+        o.value=m; o.textContent=m;
+        selMarca.appendChild(o);
+      });
+      selMarca.disabled = false;
+    });
+
+    selMarca.addEventListener('change', function(){
+      resetSelect(selModelo,'Seleccioná el modelo...');
+      resetSelect(selVersion,'Primero elegí el modelo');
+      var y=selAnio.value, m=this.value;
+      if(!y||!m) return;
+      var modelos = Object.keys(AUTOS[y][m]).sort();
+      modelos.forEach(function(mod){
+        var o=document.createElement('option');
+        o.value=mod; o.textContent=mod;
+        selModelo.appendChild(o);
+      });
+      selModelo.disabled = false;
+    });
+
+    selModelo.addEventListener('change', function(){
+      resetSelect(selVersion,'Seleccioná la versión...');
+      var y=selAnio.value, m=selMarca.value, mod=this.value;
+      if(!y||!m||!mod) return;
+      var versiones = AUTOS[y][m][mod] || [];
+      versiones.forEach(function(v){
+        var o=document.createElement('option');
+        o.value=v; o.textContent=v;
+        selVersion.appendChild(o);
+      });
+      selVersion.disabled = false;
+    });
+    } // fin initSelects
+
+    // Trigger lazy load al primer click/focus en el selector de año
+    var selAnioEl = document.getElementById('sel-anio');
+    selAnioEl.addEventListener('focus', function onFirstFocus() {
+      selAnioEl.removeEventListener('focus', onFirstFocus);
+      loadAutos(function() {
+        initSelects();
+      });
+    }, { once: true });
+
+  })();
+  </script>
   <script>
     document.getElementById('formAutimus').addEventListener('submit', function(e) {
       e.preventDefault();
