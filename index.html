@@ -14,6 +14,49 @@
 <meta charset="utf-8"/>
 <link rel="icon" type="image/png" href="/logo_favicon.png">
 <link rel="apple-touch-icon" href="/logo_favicon.png">
+<script>
+(function() {
+  function makeCircularFavicon(src) {
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() {
+      var size = 64;
+      var canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      var ctx = canvas.getContext('2d');
+      // Fondo circular blanco
+      ctx.beginPath();
+      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      // Clip circular para el logo
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+      // Dibujar logo con un pequeño margen (10%)
+      var margin = size * 0.10;
+      ctx.drawImage(img, margin, margin, size - margin * 2, size - margin * 2);
+      ctx.restore();
+      // Reemplazar el favicon
+      var links = document.querySelectorAll("link[rel*='icon']");
+      links.forEach(function(link) { link.parentNode.removeChild(link); });
+      var newLink = document.createElement('link');
+      newLink.rel = 'icon';
+      newLink.type = 'image/png';
+      newLink.href = canvas.toDataURL('image/png');
+      document.head.appendChild(newLink);
+    };
+    img.src = src;
+  }
+  window.addEventListener('load', function() {
+    makeCircularFavicon('/logo_favicon.png');
+  });
+})();
+</script>
 <link rel="preload" href="bg_hero.jpg" as="image" type="image/jpeg" fetchpriority="high">
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="preconnect" href="https://www.googletagmanager.com">
