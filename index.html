@@ -1169,23 +1169,7 @@ a{color:inherit}
   })();
   </script>
 
-  <script>
-    document.getElementById('formAutimus').addEventListener('submit', function(e) {
-      e.preventDefault();
-      var form = this;
-      fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      }).then(function(r) {
-        if (r.ok) {
-          form.reset();
-          document.getElementById('form-ok').style.display = 'block';
-          document.getElementById('step-3').style.display = 'none';
-        }
-      });
-    });
-  </script>
+  <!-- El submit del formulario es manejado por el JS unificado al pie del body -->
 </section>
 <script type="application/ld+json">
 {
@@ -1248,16 +1232,277 @@ N° de matrícula SSN 102339
 </div>
 </footer>
 
-<!-- WhatsApp flotante -->
-<a href="https://wa.me/5491127832498?text=Hola%20Autimus%2C%20me%20contacto%20desde%20la%20web"
+<!-- ═══════════════════════════════════════════════════════════
+     BOTÓN FLOTANTE DE WHATSAPP
+     Estado inicial: oculto. Aparece solo después de que el
+     usuario hace scroll hacia abajo + delay de 3 segundos.
+     La lógica JS al pie del body maneja este comportamiento.
+════════════════════════════════════════════════════════════ -->
+<style>
+  /* ── WhatsApp flotante ── */
+  .wa-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    background: #25d366;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,.28);
+    text-decoration: none;
+    /* Estado inicial: oculto con transición suave */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .wa-float.whatsapp-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  .wa-float:hover { transform: scale(1.1); }
+  .wa-float.whatsapp-visible:hover { transform: scale(1.1); }
+
+  /* ── Mensaje de agradecimiento ── */
+  #success-message {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    text-align: center;
+    padding: 32px 16px 20px;
+  }
+  #success-message.success-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .success-check-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+  }
+  .success-check-circle {
+    stroke: #4ade80;
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    animation: drawCircle 0.6s ease forwards 0.1s;
+  }
+  .success-check-tick {
+    stroke: #4ade80;
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: drawTick 0.4s ease forwards 0.6s;
+  }
+  @keyframes drawCircle {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes drawTick {
+    to { stroke-dashoffset: 0; }
+  }
+  .success-heading {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px;
+    line-height: 1.2;
+  }
+  .success-subheading {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255,255,255,.85);
+    margin: 0 0 20px;
+  }
+  .success-body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,255,255,.80);
+    max-width: 520px;
+    margin: 0 auto 14px;
+  }
+  .success-footer {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255,255,255,.70);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  .success-footer strong {
+    color: #4ade80;
+    font-weight: 700;
+  }
+</style>
+
+<a id="wa-float-btn"
+   class="wa-float"
+   href="https://wa.me/5491127832498?text=Hola%20Autimus%2C%20me%20contacto%20desde%20la%20web"
    target="_blank"
    rel="noopener noreferrer"
    onclick="return gtag_report_conversion('https://wa.me/5491127832498?text=Hola%20Autimus%2C%20me%20contacto%20desde%20la%20web')"
-   aria-label="Contactar por WhatsApp"
-   style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#25d366;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.25);transition:transform .2s;"
-   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
-  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+   aria-label="Contactar por WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
 </a>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT UNIFICADO
+     1. WhatsApp: scroll down → delay 3s → aparece (una sola vez)
+     2. Formulario: submit → 1s "generando" → fade-out form
+        → fade-in mensaje de agradecimiento (500ms)
+════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ──────────────────────────────────────────────
+     1. BOTÓN FLOTANTE DE WHATSAPP
+     Detecta el primer scroll hacia abajo.
+     Activa un setTimeout de 3000ms (una sola vez).
+  ────────────────────────────────────────────── */
+  var waBtn        = document.getElementById('wa-float-btn');
+  var waTriggered  = false;   // flag: se ejecuta una sola vez
+  var lastScrollY  = window.pageYOffset || document.documentElement.scrollTop;
+
+  function onScroll() {
+    if (waTriggered) return;  // ya disparado, no volver a ejecutar
+
+    var currentY = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Solo si el usuario scrolleó HACIA ABAJO
+    if (currentY > lastScrollY) {
+      waTriggered = true;
+
+      // Removemos el listener con { passive } para no afectar rendimiento
+      window.removeEventListener('scroll', onScroll, { passive: true });
+
+      // Delay de 3 segundos antes de mostrar el botón
+      setTimeout(function () {
+        waBtn.classList.add('whatsapp-visible');
+      }, 3000);
+    }
+
+    lastScrollY = currentY;
+  }
+
+  // Listener pasivo para no bloquear el scroll
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+
+  /* ──────────────────────────────────────────────
+     2. CIERRE ELEGANTE DEL FORMULARIO
+     Al hacer submit del paso 3:
+       t=0ms    → botón muestra "Generando tu propuesta…"
+       t=1000ms → fade-out del formulario (500ms)
+       t=1500ms → fade-in del mensaje de agradecimiento (500ms)
+  ────────────────────────────────────────────── */
+  var form         = document.getElementById('formAutimus');
+  var step3        = document.getElementById('step-3');
+  var btnEnviar    = step3 ? step3.querySelector('.btn-enviar') : null;
+  var progressDots = document.getElementById('progress-dots');
+  var formSection  = document.getElementById('formulario-contacto');
+
+  // Construimos el contenedor del mensaje de agradecimiento
+  // e insertarlo dentro del #formulario-contacto (antes del cierre)
+  var successMsg = document.createElement('div');
+  successMsg.id  = 'success-message';
+  successMsg.innerHTML = [
+    '<svg class="success-check-icon" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">',
+    '  <circle class="success-check-circle" cx="26" cy="26" r="25"/>',
+    '  <path   class="success-check-tick"   d="M14 27l8 8 16-16"/>',
+    '</svg>',
+    '<h2 class="success-heading">¡Todo listo, Christian!</h2>',
+    '<p  class="success-subheading">Tu cotización está en camino.</p>',
+    '<p  class="success-body">',
+    '  Hemos recibido tus datos con éxito. En este momento estamos analizando',
+    '  las mejores opciones del mercado para ofrecerte la cobertura que realmente',
+    '  se adapta a vos y a tu auto.',
+    '</p>',
+    '<p class="success-footer">',
+    '  Un asesor de nuestro equipo se contactará con vos a la brevedad.<br>',
+    '  <strong>Gracias por confiar en Autimus.</strong>',
+    '</p>'
+  ].join('');
+
+  if (formSection) {
+    formSection.appendChild(successMsg);
+  }
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var submitBtn = form.querySelector('.btn-enviar');
+
+      /* — FASE 1: Estado de carga (1 segundo) — */
+      if (submitBtn) {
+        submitBtn.disabled    = true;
+        submitBtn.textContent = 'Generando tu propuesta…';
+        submitBtn.style.opacity = '0.85';
+      }
+
+      // Enviamos el formulario en background (no bloqueamos la UX)
+      var formData = new FormData(form);
+      fetch(form.action, {
+        method:  'POST',
+        body:    formData,
+        headers: { 'Accept': 'application/json' }
+      }).catch(function () { /* silencioso: la UX continúa igual */ });
+
+      /* — FASE 2: Fade-out del formulario a t=1000ms — */
+      setTimeout(function () {
+
+        // Fade-out suave del formulario y los dots
+        var targets = [form, progressDots];
+        targets.forEach(function (el) {
+          if (!el) return;
+          el.style.transition = 'opacity 0.5s ease';
+          el.style.opacity    = '0';
+        });
+
+        /* — FASE 3: Fade-in del mensaje de agradecimiento a t=1500ms — */
+        setTimeout(function () {
+
+          // Ocultamos formulario y dots
+          targets.forEach(function (el) {
+            if (!el) return;
+            el.style.display    = 'none';
+            el.style.opacity    = '1';
+            el.style.transition = '';
+          });
+
+          // Mostramos el contenedor antes del fade-in
+          successMsg.style.display = 'block';
+
+          // Forzamos reflow para que la transición CSS funcione
+          void successMsg.offsetWidth;
+
+          // Aplicamos clase que dispara opacity 1 + translateY(0)
+          successMsg.classList.add('success-visible');
+
+        }, 500); // 500ms después del inicio del fade-out = t+1500ms total
+
+      }, 1000); // 1 segundo de "estado de carga"
+
+    });
+  }
+
+})();
+</script>
 
 </body>
 </html>
