@@ -2,8 +2,34 @@
 
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) — defer para no bloquear el render -->
-<script async defer src="https://www.googletagmanager.com/gtag/js?id=AW-11350503688"></script>
+<!-- 1. Charset y viewport: primero siempre -->
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+
+<!-- 2. Preload de recursos críticos: lo antes posible para que el browser los descargue de inmediato -->
+<link rel="preload" href="bg_hero.jpg" as="image" type="image/jpeg" fetchpriority="high">
+
+<!-- 3. Preconnect y dns-prefetch -->
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://formspree.io">
+<link rel="dns-prefetch" href="https://formspree.io">
+
+<!-- 4. Metadatos y SEO -->
+<title>Autimus | Seguros para automotor, hogar, empresas y comercios.  </title>
+<meta content="Seguro automotor en Argentina. Asesoramiento en seguros generales, Empresas, ART, Negocios, Seguros de vida, Gestión de riesgo patrimonial integral. Comparamos coberturas y precios con asesoramiento personalizado." name="description"/>
+<meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots"/>
+<link rel="canonical" href="https://www.autimus.com.ar/" />
+<link rel="alternate" hreflang="es-AR" href="https://www.autimus.com.ar/"/>
+<meta content="#ffffff" name="theme-color"/>
+
+<!-- 5. Favicon -->
+<link rel="icon" type="image/png" href="/logo_favicon.png">
+<link rel="apple-touch-icon" href="/logo_favicon.png">
+
+<!-- 6. Scripts de terceros: al final del head, con async -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11350503688"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -11,9 +37,7 @@
   gtag('config', 'AW-11350503688');
 </script>
 
-<meta charset="utf-8"/>
-<link rel="icon" type="image/png" href="/logo_favicon.png">
-<link rel="apple-touch-icon" href="/logo_favicon.png">
+<!-- 7. Favicon circular: se ejecuta on load, no bloquea nada -->
 <script>
 (function() {
   function makeCircularFavicon(src) {
@@ -57,18 +81,6 @@
   });
 })();
 </script>
-<link rel="preload" href="bg_hero.jpg" as="image" type="image/jpeg" fetchpriority="high">
-<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-<link rel="dns-prefetch" href="https://www.googletagmanager.com">
-<link rel="preconnect" href="https://formspree.io">
-<link rel="dns-prefetch" href="https://formspree.io">
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Autimus | Seguros para automotor, hogar, empresas y comercios.  </title>
-<meta content="Seguro automotor en Argentina. Asesoramiento en seguros generales, Empresas, ART, Negocios, Seguros de vida, Gestión de riesgo patrimonial integral. Comparamos coberturas y precios con asesoramiento personalizado." name="description"/>
-<meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots"/>
-<link rel="canonical" href="https://www.autimus.com.ar/" />
-<link rel="alternate" hreflang="es-AR" href="https://www.autimus.com.ar/"/>
-<meta content="#ffffff" name="theme-color"/>
 <script>
 function gtag_report_conversion(url) {
   var navigated = false;
