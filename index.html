@@ -2,7 +2,7 @@
 
 <html lang="es">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) — defer para no bloquear el render -->
 <script async defer src="https://www.googletagmanager.com/gtag/js?id=AW-11350503688"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -58,8 +58,10 @@
 })();
 </script>
 <link rel="preload" href="bg_hero.jpg" as="image" type="image/jpeg" fetchpriority="high">
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
 <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://formspree.io">
+<link rel="dns-prefetch" href="https://formspree.io">
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Autimus | Seguros para automotor, hogar, empresas y comercios.  </title>
 <meta content="Seguro automotor en Argentina. Asesoramiento en seguros generales, Empresas, ART, Negocios, Seguros de vida, Gestión de riesgo patrimonial integral. Comparamos coberturas y precios con asesoramiento personalizado." name="description"/>
@@ -111,19 +113,23 @@ function gtag_report_conversion(url) {
 }
 
 /* ── Performance & CLS fixes ── */
-.top-logo { aspect-ratio: 300/80; }
+.top-logo { aspect-ratio: 300/80; width: min(380px, 100%); height: auto; }
 .company-logo img { display: block; object-fit: contain; }
+/* Reduce animation compositor cost */
+@media (prefers-reduced-motion: no-preference) {
+  .company-track { will-change: transform; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .company-track { animation: none !important; }
+  .company-track { animation: none !important; will-change: auto; }
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{}
 body{
   margin:0;
   font-family:Arial,Helvetica,sans-serif;
   color:var(--text);
-  background: linear-gradient(180deg, rgba(220,235,250,0.20) 0%, rgba(220,235,250,0.20) 100%), url('bg_hero.jpg') center top / cover fixed no-repeat;
+  background: linear-gradient(180deg, rgba(220,235,250,0.20) 0%, rgba(220,235,250,0.20) 100%), url('bg_hero.jpg') center top / cover no-repeat;
   overflow-x:hidden;
 }
 img{max-width:100%;display:block}
@@ -376,6 +382,8 @@ a{color:inherit}
   margin:28px auto 0;
   padding:28px 30px;
   background:#ffffff;
+  content-visibility:auto;
+  contain-intrinsic-size:0 400px;
 }
 .seo-block section + section{margin-top:22px}
 .seo-block h2{
@@ -395,6 +403,8 @@ a{color:inherit}
   margin:22px auto 0;
   padding:28px 30px;
   background:#ffffff;
+  content-visibility:auto;
+  contain-intrinsic-size:0 600px;
 }
 .faq-block h2{
   margin:0 0 16px;
@@ -626,7 +636,7 @@ a{color:inherit}
 </head>
 <body>
 <main class="wrap">
-<img alt="Logo Autimus" class="top-logo" src="logo-autimus.png" width="300" height="80" decoding="async" fetchpriority="high">
+<img alt="Logo Autimus" class="top-logo" src="logo-autimus.png" width="300" height="80" decoding="async" loading="eager">
 
 <section class="autimus-hero-panel">
 
@@ -644,7 +654,7 @@ a{color:inherit}
 </div>
 
 <div style="text-align:center;margin:20px auto 0;">
-  <button onclick="document.getElementById('formulario-contacto').scrollIntoView({behavior:'smooth'});return false;" style="display:inline-block;background:#16a34a;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:700;text-decoration:none;padding:15px 38px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 10px 28px rgba(22,163,74,.40);letter-spacing:0.01em;">Cotizá tu seguro ahora</button>
+  <button onclick="var t=document.getElementById('formulario-contacto');if(t){t.scrollIntoView({behavior:'smooth',block:'start'});}return false;" style="display:inline-block;background:#16a34a;color:#fff;font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:700;text-decoration:none;padding:15px 38px;border-radius:999px;border:none;cursor:pointer;box-shadow:0 10px 28px rgba(22,163,74,.40);letter-spacing:0.01em;">Cotizá tu seguro ahora</button>
   <div style="margin-top:10px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:rgba(255,255,255,0.75);">Simple, rápido y sin compromiso</div>
 </div>
 
@@ -1425,7 +1435,7 @@ N° de matrícula SSN 102339
     '  <circle class="success-check-circle" cx="26" cy="26" r="25"/>',
     '  <path   class="success-check-tick"   d="M14 27l8 8 16-16"/>',
     '</svg>',
-    '<h2 class="success-heading">¡Todo listo, Christian!</h2>',
+    '<h2 class="success-heading" id="success-heading-name">¡Todo listo!</h2>',
     '<p  class="success-subheading">Tu cotización está en camino.</p>',
     '<p  class="success-body">',
     '  Hemos recibido tus datos con éxito. En este momento estamos analizando',
@@ -1484,6 +1494,16 @@ N° de matrícula SSN 102339
             el.style.opacity    = '1';
             el.style.transition = '';
           });
+
+          // Leemos el nombre que ingresó el usuario y personalizamos el heading
+          var nombreInput = form.querySelector('input[name="nombre"]');
+          var nombreValor = nombreInput ? nombreInput.value.trim() : '';
+          var headingEl   = document.getElementById('success-heading-name');
+          if (headingEl) {
+            headingEl.textContent = nombreValor
+              ? '¡Todo listo, ' + nombreValor + '!'
+              : '¡Todo listo!';
+          }
 
           // Mostramos el contenedor antes del fade-in
           successMsg.style.display = 'block';
