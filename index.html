@@ -8,7 +8,6 @@
 
 <!-- 2. Preload de recursos críticos: lo antes posible para que el browser los descargue de inmediato -->
 <link rel="preload" href="bg_hero.jpg" as="image" type="image/jpeg" fetchpriority="high">
-<link rel="preload" href="logo-autimus.png" as="image" fetchpriority="high">
 
 <!-- 3. Preconnect y dns-prefetch -->
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
@@ -77,11 +76,9 @@
     };
     img.src = src;
   }
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(function(){ makeCircularFavicon('/logo_favicon.png'); }, {timeout:3000});
-  } else {
-    setTimeout(function(){ makeCircularFavicon('/logo_favicon.png'); }, 2000);
-  }
+  window.addEventListener('load', function() {
+    makeCircularFavicon('/logo_favicon.png');
+  });
 })();
 </script>
 <script>
@@ -655,7 +652,7 @@ a{color:inherit}
 </head>
 <body>
 <main class="wrap">
-<img alt="Logo Autimus" class="top-logo" src="logo-autimus.png" width="300" height="80" decoding="sync" loading="eager" fetchpriority="high">
+<img alt="Logo Autimus" class="top-logo" src="logo-autimus.png" width="300" height="80" decoding="async" loading="eager">
 
 <section class="autimus-hero-panel">
 
